@@ -1,4 +1,5 @@
 class Genetic_Computation :
+    
     def __init__(self, points_to_visit:list[tuple]) -> None:
         self.points_to_visit = points_to_visit
         self.population = []
@@ -16,11 +17,11 @@ class Genetic_Computation :
         from random import shuffle
 
         for _ in range(population_size) :
-            points_index = [i for i in range(1, len(self.points_to_visit))]
+            points_index = self.points_to_visit.copy()
+            points_index.pop(0)
             shuffle(points_index)
             points_index.insert(0, self.points_to_visit[0])
-
-        print(self.population)
+            self.population.append(points_index)        
 
     def evaluate_path_population(self) :
         """"""
