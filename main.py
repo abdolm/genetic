@@ -11,3 +11,4 @@ for i in range(20) :
     
 my_genetic_paths = Genetic_Computation(poins_to_visit)
 my_genetic_paths.generate_path_population(40)
+my_genetic_paths.evaluate_path_population()
