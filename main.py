@@ -12,4 +12,8 @@ for i in range(20) :
 my_genetic_paths = Genetic_Computation(poins_to_visit)
 my_genetic_paths.generate_path_population(40)
 my_genetic_paths.evaluate_path_population()
-print(my_genetic_paths.population)
+#print(my_genetic_paths.population)
+
+ordered_genetic_paths = my_genetic_paths.select_best_paths()
+for path in ordered_genetic_paths : # Check if the quicksort of the paths takes effect.
+    print(path['length'])
