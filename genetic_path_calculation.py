@@ -21,10 +21,19 @@ class Genetic_Computation :
             points_index.pop(0)
             shuffle(points_index)
             points_index.insert(0, self.points_to_visit[0])
-            self.population.append(points_index)        
+
+            path_dict = {
+                "path" : points_index,
+                "length" : 0
+            }
+            self.population.append(path_dict)
 
     def evaluate_path_population(self) :
         """"""
+        from distance_calculation import calculate_path_sum
+        
+        for path_dict in self.population :
+            path_dict['length'] = calculate_path_sum(path_dict['path'])
 
     def select_best_paths(self) :
         """"""
