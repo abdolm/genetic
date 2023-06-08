@@ -17,10 +17,9 @@ class Genetic_Computation :
         from random import shuffle
 
         for _ in range(population_size) :
-            points_index = self.points_to_visit.copy()
-            points_index.pop(0)
+            points_index = [i for i in range(1, len(self.points_to_visit))]
             shuffle(points_index)
-            points_index.insert(0, self.points_to_visit[0])
+            points_index.insert(0, 0)
 
             path_dict = {
                 "path" : points_index,
@@ -33,7 +32,8 @@ class Genetic_Computation :
         from distance_calculation import calculate_path_sum
         
         for path_dict in self.population :
-            path_dict['length'] = calculate_path_sum(path_dict['path'])
+            path_dict['length'] = calculate_path_sum(path_dict['path'], self.points_to_visit)
 
     def select_best_paths(self) :
+        from quicksort import quicksort
         """"""

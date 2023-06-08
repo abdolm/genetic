@@ -9,12 +9,19 @@ def calculate_distance(first_point:tuple, second_point:tuple) -> float :
         (y2 - y1) ** 2
     )
 
-def calculate_path_sum(path_of_points:list[tuple]) -> float:
+def calculate_path_sum(points_index:list[int], coordonates_from_original_path:list[tuple]) -> float:
     """Calculate the distance to move to every point in the given order by 
     calculating the distance between a point and the next point."""
     distance = 0
-    for i in range(len(path_of_points)-1):
-       distance += calculate_distance(path_of_points[i],path_of_points[i+1])
+    
+    for i in range(len(coordonates_from_original_path) -1) :
+        distance += calculate_distance(
+            coordonates_from_original_path[points_index[i]],
+            coordonates_from_original_path[points_index[i+1]]
+        )
+
+    #for i in range(len(path_of_points)-1):
+    #   distance += calculate_distance(path_of_points[i],path_of_points[i+1])
     return distance
         
-    
+
