@@ -43,8 +43,12 @@ class Genetic_Computation :
             path_dict['length'] = calculate_path_sum(path_dict['path'], self.points_to_visit)
 
     def select_best_paths(self) :
-        """"""
-        return self.quicksort_dict(self.population.copy())
+        """Sort all paths from the smallest dist to browse all points to the biggest and
+        devide the result to save 1/3 of the best paths only"""
+        
+        best_paths = self.quicksort_dict(self.population.copy())
+        tier_best_paths = best_paths[:len(best_paths) // 3]
+        return tier_best_paths
 
     def quicksort_dict(self, possible_paths:list[dict]) -> list[dict] :
         """"""
