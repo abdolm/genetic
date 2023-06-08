@@ -28,11 +28,24 @@ class Genetic_Computation :
             self.population.append(path_dict)
 
     def evaluate_path_population(self) :
-        """"""
+        """Calculate disance for each path and set in each of their dictionaries"""
         from distance_calculation import calculate_path_sum
         
         for path_dict in self.population :
             path_dict['length'] = calculate_path_sum(path_dict['path'], self.points_to_visit)
+
+    def quicksort_dict(path_dist:dict) -> dict :
+        """"""
+        if len(path_dist) <= 1:
+            return path_dist
+    
+        pivot_index = len(path_dist) - 1
+        pivot = path_dist[pivot_index]
+        
+        liste_gauche = [elt for elt in path_dist[:pivot_index] if elt <= pivot]
+        liste_droite = [elt for elt in path_dist[:pivot_index] if elt > pivot]
+        
+        return quicksort_dict(liste_gauche) + [pivot] + quicksort_dict(liste_droite)
 
     def select_best_paths(self) :
         from quicksort import quicksort
