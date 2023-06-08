@@ -29,7 +29,15 @@ class Genetic_Computation :
             self.population.append(path_dict)
 
     def evaluate_path_population(self) :
-        """"""
+        """
+        Evaluate the diffent path for our population 
+
+        Args:
+            population_count (int): How many paths to generate
+
+        Returns:
+            list[dict]: a list of dictionary corresponding to the paths created
+        """
         from distance_calculation import calculate_path_sum
         
         for path_dict in self.population :
