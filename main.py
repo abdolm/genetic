@@ -4,7 +4,6 @@ from genetic_path_calculation import Genetic_Computation
 
 # dict of str : tuple
 points_to_visit:list[tuple] = []
-random.seed(66)
 
 for i in range(20) :
     points_to_visit.append((randint(-500, 500), randint(-500, 500)))
