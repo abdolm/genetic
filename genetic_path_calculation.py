@@ -51,7 +51,8 @@ class Genetic_Computation :
         return tier_best_paths
 
     def quicksort_dict(self, possible_paths:list[dict]) -> list[dict] :
-        """"""
+        """Use the quick sort algorithm on list of dictionary to compare the length of many paths
+        and return a sorted list from smallest length ot biggest"""
         if len(possible_paths) <= 1:
             return possible_paths
     
@@ -61,4 +62,45 @@ class Genetic_Computation :
         liste_droite = [dict_path2 for dict_path2 in possible_paths[:pivot_index] if dict_path2['length'] > pivot['length']]
         
         return self.quicksort_dict(liste_gauche) + [pivot] + self.quicksort_dict(liste_droite)
+
+    def crossbreed_and_mutate(self, possible_paths:list[dict]) -> list[dict] :
+        """Generate crossbreed of paths and mutations to try to obtain a new
+        set of path wih a possibility of a more interesting result (lower distance)
+
+        Args:
+            possible_paths (list[dict]): List which contains each paths of points with their lengths 
+
+        Returns:
+            list[dict]: A new list of paths of points generated after crossbreeding and mutations
+        """
+        from random import randint
+        
+        new_generation_of_paths:list[dict] = []
+        desired_number_of_paths = len(possible_paths) * 3
+        
+        # First: save the first path which is currently the best option.
+        new_generation_of_paths.append(possible_paths[0])
+
+        # Let's make crossbreeding between random paths to create our new generation.
+        while len(new_generation_of_paths) < desired_number_of_paths :
+            first_path_index = randint(0, len(possible_paths)-1)
+            second_path_index = randint(0, len(possible_paths)-1)
+            if first_path_index == second_path_index : continue # Avoid having the same path...
+
+            path_points_count = len(possible_paths[first_path_index]['path'])
+            fracture_position = randint(
+                path_points_count //3, 
+                2* (path_points_count // 3)
+                )
+            print(possible_paths[first_path_index]['path'])
+
+            new_path = [elt for elt in possible_paths[first_path_index]['path'][:fracture_position]]
+            print(f"New path beginning : {new_path} with {fracture_position} elements")
+            print(f"Second path : {possible_paths[second_path_index]['path']}")
+            new_path += [point for point in possible_paths[second_path_index]['path'] if 
+                         point not in new_path]
+            print(f"Full new path : {new_path}")
+            break
+            
+
 
