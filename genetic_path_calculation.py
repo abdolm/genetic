@@ -42,12 +42,13 @@ class Genetic_Computation :
         for path_dict in self.population :
             path_dict['length'] = calculate_path_sum(path_dict['path'], self.points_to_visit)
 
-    def select_best_paths(self) :
+    def select_best_paths(self) -> list[dict]:
         """Sort all paths from the smallest dist to browse all points to the biggest and
         devide the result to save 1/3 of the best paths only"""
         
         best_paths = self.quicksort_dict(self.population.copy())
         tier_best_paths = best_paths[:len(best_paths) // 3]
+        self.population = tier_best_paths.copy()
         return tier_best_paths
 
     def quicksort_dict(self, possible_paths:list[dict]) -> list[dict] :
@@ -63,7 +64,7 @@ class Genetic_Computation :
         
         return self.quicksort_dict(liste_gauche) + [pivot] + self.quicksort_dict(liste_droite)
 
-    def crossbreed_and_mutate(self, possible_paths:list[dict]) -> list[dict] :
+    def crossbreed_and_mutate(self) -> list[dict] :
         """Generate crossbreed of paths and mutations to try to obtain a new
         set of path wih a possibility of a more interesting result (lower distance)
 
@@ -74,39 +75,39 @@ class Genetic_Computation :
             list[dict]: A new list of paths of points generated after crossbreeding and mutations
         """
         from random import randint
-        
-        new_generation_of_paths:list[dict] = []
-        desired_number_of_paths = len(possible_paths) * 3
-        
-        # First: save the first path which is currently the best option.
-        new_generation_of_paths.append(possible_paths[0])
+
+        desired_number_of_paths = len(self.population) * 3
 
         # Let's make crossbreeding between random paths to create our new generation.
-        while len(new_generation_of_paths) < desired_number_of_paths :
-            first_path_index = randint(0, len(possible_paths)-1)
-            second_path_index = randint(0, len(possible_paths)-1)
+        while len(self.population) < desired_number_of_paths :
+            first_path_index = randint(0, len(self.population)-1)
+            second_path_index = randint(0, len(self.population)-1)
             if first_path_index == second_path_index : continue # Avoid having the same path...
 
-            path_points_count = len(possible_paths[first_path_index]['path'])
+            path_points_count = len(self.population[first_path_index]['path'])
             fracture_position = randint(
                 path_points_count //3, 
                 2* (path_points_count // 3)
                 )
-            new_path = [elt for elt in possible_paths[first_path_index]['path'][:fracture_position]]
-            new_path += [point for point in possible_paths[second_path_index]['path'] if 
+            new_path = [elt for elt in self.population[first_path_index]['path'][:fracture_position]]
+            new_path += [point for point in self.population[second_path_index]['path'] if 
                          point not in new_path]
-            
             mutation_chance = randint(0, 99)
             if mutation_chance < 20 :
                 print(f"Before mutation {new_path}")
-                first_index = randint(0, path_points_count-1)
-                second_index = randint(0, path_points_count-1)
+                first_index = randint(1, path_points_count-1)
+                second_index = randint(1, path_points_count-1)
                 while first_index == second_index :
-                    second_index = randint(0, path_points_count-1)
+                    second_index = randint(1, path_points_count-1)
                 new_path[first_index], new_path[second_index] = new_path[second_index], new_path[first_index] 
                 print(f"After mutation {new_path}")
 
-            new_generation_of_paths.append(new_path)
+            print(new_path)
+            path_dict = {
+                "path" : new_path,
+                "length" : 0
+            }
+            self.population.append(path_dict)
             
 
-
+# DO NOT FORGET TO REMOVE THE ORIGIN (FIRST POINT) BEFORE RANDOMIZING THE PATHS !
