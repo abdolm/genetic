@@ -92,15 +92,21 @@ class Genetic_Computation :
                 path_points_count //3, 
                 2* (path_points_count // 3)
                 )
-            print(possible_paths[first_path_index]['path'])
-
             new_path = [elt for elt in possible_paths[first_path_index]['path'][:fracture_position]]
-            print(f"New path beginning : {new_path} with {fracture_position} elements")
-            print(f"Second path : {possible_paths[second_path_index]['path']}")
             new_path += [point for point in possible_paths[second_path_index]['path'] if 
                          point not in new_path]
-            print(f"Full new path : {new_path}")
-            break
+            
+            mutation_chance = randint(0, 99)
+            if mutation_chance < 20 :
+                print(f"Before mutation {new_path}")
+                first_index = randint(0, path_points_count-1)
+                second_index = randint(0, path_points_count-1)
+                while first_index == second_index :
+                    second_index = randint(0, path_points_count-1)
+                new_path[first_index], new_path[second_index] = new_path[second_index], new_path[first_index] 
+                print(f"After mutation {new_path}")
+
+            new_generation_of_paths.append(new_path)
             
 
 
