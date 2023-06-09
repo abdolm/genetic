@@ -15,7 +15,8 @@ my_genetic_paths.evaluate_path_population()
 #print(my_genetic_paths.population)
 
 ordered_genetic_paths = my_genetic_paths.select_best_paths()
-for path in ordered_genetic_paths : # Check if the quicksort of the paths takes effect.
-    print(path['length'])
+#for path in ordered_genetic_paths : # Check if the quicksort of the paths takes effect.
+#    print(path['length'])
 
 my_genetic_paths.crossbreed_and_mutate()
+

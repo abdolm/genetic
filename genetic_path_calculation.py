@@ -92,22 +92,18 @@ class Genetic_Computation :
             new_path = [elt for elt in self.population[first_path_index]['path'][:fracture_position]]
             new_path += [point for point in self.population[second_path_index]['path'] if 
                          point not in new_path]
+            
+            # Add a mutation to the path with 20% of chance. (swap value at random index)
             mutation_chance = randint(0, 99)
             if mutation_chance < 20 :
-                print(f"Before mutation {new_path}")
                 first_index = randint(1, path_points_count-1)
                 second_index = randint(1, path_points_count-1)
                 while first_index == second_index :
                     second_index = randint(1, path_points_count-1)
                 new_path[first_index], new_path[second_index] = new_path[second_index], new_path[first_index] 
-                print(f"After mutation {new_path}")
 
-            print(new_path)
             path_dict = {
                 "path" : new_path,
                 "length" : 0
             }
             self.population.append(path_dict)
-            
-
-# DO NOT FORGET TO REMOVE THE ORIGIN (FIRST POINT) BEFORE RANDOMIZING THE PATHS !
